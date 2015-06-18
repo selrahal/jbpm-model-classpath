@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Car implements Serializable{
+	private static final long serialVersionUID = -6641352565554504638L;
 	private Person driver;
 	private String make;
 	private String model;

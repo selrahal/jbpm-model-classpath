@@ -16,30 +16,31 @@ angular.module('awesomeApp').controller('AccidentController', [
 			vm.other.lastName = "Elrahal";
 			vm.other.age = 54;
 			
+			vm.processId = 0;
+			
 			
 			vm.feedback = '';
 			
-			vm.submitv1 = function() {
+			vm.submit = function() {
 				$log.info("Submitting request");
 				$log.info(vm.person);
 				$log.info(vm.other);
 				var myCar = {"driver" : vm.person};
-				var otherCar = {"driver" : vm.person};
+				var otherCar = {"driver" : vm.other};
 				var accident = { "cars" : [myCar, otherCar]};
-				accidentFactory.createv1(accident).then(function(response) {
+				accidentFactory.create(accident).then(function(response) {
 					vm.feedback = response.data;
+					$log.info(vm.feedback);
 				});
 			}
 			
-			vm.submitv2 = function() {
-				$log.info("Submitting request");
-				$log.info(vm.person);
-				$log.info(vm.other);
-				var myCar = {"driver" : vm.person};
-				var otherCar = {"driver" : vm.person};
-				var accident = { "cars" : [myCar, otherCar]};
-				accidentFactory.createv2(accident).then(function(response) {
+			
+			
+			vm.getInfo = function() {
+				$log.info("requesting info for:" + vm.processId);
+				accidentFactory.getInfo(vm.processId).then(function(response) {
 					vm.feedback = response.data;
+					$log.info(vm.feedback);
 				});
 			}
 		} ]);

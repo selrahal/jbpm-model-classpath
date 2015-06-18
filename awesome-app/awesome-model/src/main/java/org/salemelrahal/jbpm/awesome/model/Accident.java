@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Accident implements Serializable{
+	private static final long serialVersionUID = 2032431217015565536L;
 	private List<Car> cars;
 
 	@XmlElement

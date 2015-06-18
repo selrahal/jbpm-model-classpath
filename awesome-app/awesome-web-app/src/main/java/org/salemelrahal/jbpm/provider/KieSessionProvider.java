@@ -12,10 +12,11 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEnvironment;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.manager.RuntimeManagerFactory;
+import org.kie.api.task.TaskService;
 import org.kie.internal.runtime.manager.context.EmptyContext;
 import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
 
-public abstract class KieSessionProvider {
+public class KieSessionProvider {
 	private RuntimeManager runtimeManager;
 	
 	@PersistenceUnit(unitName = "org.salemelrahal.jbpm.awesome")
@@ -32,7 +33,7 @@ public abstract class KieSessionProvider {
 			.knowledgeBase(kieContainer.getKieBase())
 			.addEnvironmentEntry(EnvironmentName.ENTITY_MANAGER_FACTORY, entityManagerFactory)
 			.get();
-		return runtimeManagerFactory.newPerProcessInstanceRuntimeManager(runtimeEnvironment);
+		return runtimeManagerFactory.newPerProcessInstanceRuntimeManager(runtimeEnvironment, getIdentifier());
 	}
 	
 	public KieSession newKieSession() {
@@ -51,5 +52,24 @@ public abstract class KieSessionProvider {
 		return runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get(processInstanceId)).getKieSession();
 	}
 	
-	protected abstract ReleaseId getReleaseId();
+	public TaskService getTaskService(long processInstanceId) {
+		if (runtimeManager == null) {
+			runtimeManager = getRuntimeManager(getReleaseId());
+		}
+		
+		return runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get(processInstanceId)).getTaskService();
+	}
+	
+	public ReleaseId getReleaseId() {
+		String groupId = "org.salemelrahal.jbpm";
+		String artifactId = "awesome-kjar";
+		String version = "1.0.0-SNAPSHOT";
+		
+		KieServices kieServices = KieServices.Factory.get();
+		return kieServices.newReleaseId(groupId, artifactId, version);
+	}
+
+	protected String getIdentifier() {
+		return "new";
+	}
 }

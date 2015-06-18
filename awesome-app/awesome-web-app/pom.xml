@@ -54,6 +54,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>awesome-web-app</finalName>
+		<finalName>awesome-web-app-v1</finalName>
 	</build>
 </project>

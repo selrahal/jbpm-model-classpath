@@ -20,6 +20,10 @@
 			<div class="row">
 				<h2 class="well">Create An Accident Report</h2>
 			</div>
+			
+			<div class="row" data-ng-show="partialCtrl.feedback !== ''" >
+				<h2>{{ partialCtrl.feedback }}</h2>
+			</div>
 
 			<div class="row">
 				<div class="col-md-8">
@@ -46,12 +50,23 @@
 								
 								<label for="otherAge">Their Age</label> 
 								<input type="text" class="form-control"id="otherAge" data-ng-model="partialCtrl.other.age" />
-
-								<button type="submit" class="btn btn-primary pull-left"
-									data-ng-click="partialCtrl.submitv1()">Submit v1</button>
 									
 								<button type="submit" class="btn btn-primary pull-left"
-									data-ng-click="partialCtrl.submitv2()">Submit v2</button>
+									data-ng-click="partialCtrl.submit()">Submit</button>
+							</div>
+						</div>
+						
+						
+						
+						
+						<div class="col-md-8">
+							<div class="form-group">
+							
+								<label for="processId">Process ID</label> 
+								<input type="text" class="form-control" id="processId" data-ng-model="partialCtrl.processId" />
+									
+								<button type="submit" class="btn btn-primary pull-left"
+									data-ng-click="partialCtrl.getInfo()">Get Info</button>
 							</div>
 						</div>
 					</div>
